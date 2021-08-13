@@ -30,7 +30,7 @@ class MessagesProxy:
         self.messages = MessagesSet()
         self.fallback_messages = MessagesSet()
         if config.debug:
-            messages = json.load(open(messages_file))
+            messages = json.load(open(messages_file, encoding="utf-8"))
             for message_name, message_text in messages.items():
                 if isinstance(message_text, dict):
                     message_text = message_text["text"]
@@ -68,7 +68,7 @@ class MessagesProxy:
                     )
                     async for row in cur:
                         setattr(self.fallback_messages, row[0], row[1])
-                    messages = json.load(open(messages_file))
+                    messages = json.load(open(messages_file, encoding="utf-8"))
                     for message_name in hard_list:
                         if message_name not in messages.keys():
                             await cur.execute(
